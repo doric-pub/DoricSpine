@@ -467,11 +467,20 @@ class demo extends Panel {
                   text({
                     text: "Select Skin",
                     onClick: () => {
-                      const popContent = vlayout([], {
-                        layoutConfig: layoutConfig()
+                      let lc;
+                      if (self.skinList.length < 10) {
+                        lc = layoutConfig()
+                          .mostWidth()
+                          .mostHeight()
+                          .configAlignment(Gravity.Center);
+                      } else {
+                        lc = layoutConfig()
                           .mostWidth()
                           .fitHeight()
-                          .configAlignment(Gravity.Center),
+                          .configAlignment(Gravity.Center);
+                      }
+                      const popContent = vlayout([], {
+                        layoutConfig: lc,
                         space: 10,
                         gravity: Gravity.Center,
                         backgroundColor: Color.parse("#4d4c4c4c"),

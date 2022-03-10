@@ -12,7 +12,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@esotericsoftware/spine-core": "4.0.20",
+    "@esotericsoftware/spine-core": "4.0.21",
     "dangle": ">=0.1.9",
     "doric": ">=0.10.6",
     "doric-cli": ">=0.10.6"
