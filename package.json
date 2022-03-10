@@ -1,0 +1,28 @@
+{
+  "name": "doric-spine",
+  "version": "0.1.0",
+  "main": "dist/bundle_doric-spine.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "doric build",
+    "dev": "cd example && doric dev",
+    "clean": "cd example && doric clean",
+    "android": "cd example && doric run android",
+    "ios": "cd example && doric run iOS"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@esotericsoftware/spine-core": "4.0.20",
+    "dangle": ">=0.1.9",
+    "doric": ">=0.10.6",
+    "doric-cli": ">=0.10.6"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2",
+    "rollup": "^2.70.0",
+    "@rollup/plugin-commonjs": "^21.0.2",
+    "@rollup/plugin-image": "^2.1.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.1.3"
+  }
+}
