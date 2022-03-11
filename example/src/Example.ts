@@ -19,7 +19,7 @@ import { dangleView, DangleWebGLRenderingContext, vsync } from "dangle";
 import * as spine from "doric-spine";
 
 @Entry
-class Example extends Panel {
+export class Example extends Panel {
   private container?: VLayout;
   private currentEffect = "None";
   private skeletonList: Array<string> = [];
@@ -29,7 +29,7 @@ class Example extends Panel {
   private debug = false;
 
   onShow() {
-    navbar(context).setTitle("Example");
+    navbar(this.context).setTitle("Example");
   }
   build(rootView: Group) {
     const self = this;
@@ -53,7 +53,7 @@ class Example extends Panel {
 
               var gl = glContext as WebGLRenderingContext;
               const requestAnimationFrame =
-                vsync(context).requestAnimationFrame;
+                vsync(self.context).requestAnimationFrame;
               //#region code to impl
 
               var shader;
@@ -352,7 +352,7 @@ class Example extends Panel {
                         gravity: Gravity.Center,
                         backgroundColor: Color.parse("#4d4c4c4c"),
                         onClick: () => {
-                          popover(context).dismiss(popRootView);
+                          popover(self.context).dismiss(popRootView);
                         },
                       });
                       self.skeletonList.forEach((element) => {
@@ -365,12 +365,12 @@ class Example extends Panel {
                               activeSkeleton = element;
                               setupAnimationUI();
                               setupSkinUI();
-                              popover(context).dismiss(popRootView);
+                              popover(self.context).dismiss(popRootView);
                             },
                           })
                         );
                       });
-                      popover(context).show(popRootView);
+                      popover(self.context).show(popRootView);
                     },
                   })
                 );
@@ -387,7 +387,7 @@ class Example extends Panel {
                         gravity: Gravity.Center,
                         backgroundColor: Color.parse("#4d4c4c4c"),
                         onClick: () => {
-                          popover(context).dismiss(popRootView);
+                          popover(self.context).dismiss(popRootView);
                         },
                       });
                       self.effects.forEach((element) => {
@@ -398,12 +398,12 @@ class Example extends Panel {
                             backgroundColor: Color.YELLOW,
                             onClick: () => {
                               self.currentEffect = element;
-                              popover(context).dismiss(popRootView);
+                              popover(self.context).dismiss(popRootView);
                             },
                           })
                         );
                       });
-                      popover(context).show(popRootView);
+                      popover(self.context).show(popRootView);
                     },
                   })
                 );
@@ -428,7 +428,7 @@ class Example extends Panel {
                         gravity: Gravity.Center,
                         backgroundColor: Color.parse("#4d4c4c4c"),
                         onClick: () => {
-                          popover(context).dismiss(popRootView);
+                          popover(self.context).dismiss(popRootView);
                         },
                       });
                       self.animationList.forEach((element) => {
@@ -445,12 +445,12 @@ class Example extends Panel {
                               var animationName = element;
                               skeleton.setToSetupPose();
                               state.setAnimation(0, animationName, true);
-                              popover(context).dismiss(popRootView);
+                              popover(self.context).dismiss(popRootView);
                             },
                           })
                         );
                       });
-                      popover(context).show(popRootView);
+                      popover(self.context).show(popRootView);
                     },
                   })
                 );
@@ -485,7 +485,7 @@ class Example extends Panel {
                         gravity: Gravity.Center,
                         backgroundColor: Color.parse("#4d4c4c4c"),
                         onClick: () => {
-                          popover(context).dismiss(popRootView);
+                          popover(self.context).dismiss(popRootView);
                         },
                       });
                       const popRootView = scroller(popContent, {
@@ -511,7 +511,7 @@ class Example extends Panel {
                               skeleton.setSkinByName(skinName);
                               skeleton.setSlotsToSetupPose();
 
-                              popover(context).dismiss(popRootView);
+                              popover(self.context).dismiss(popRootView);
                             },
                           })
                         );
@@ -522,7 +522,7 @@ class Example extends Panel {
                           textSize: 20,
                         })
                       );
-                      popover(context).show(popRootView);
+                      popover(self.context).show(popRootView);
                     },
                   })
                 );

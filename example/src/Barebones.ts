@@ -92,11 +92,11 @@ class App {
 }
 
 @Entry
-class Barebones extends Panel {
+export class Barebones extends Panel {
   private container?: VLayout;
 
   onShow() {
-    navbar(context).setTitle("Barebones");
+    navbar(this.context).setTitle("Barebones");
   }
   build(rootView: Group) {
     const self = this;

@@ -11,7 +11,7 @@ import pub.doric.devkit.DoricDev;
 import pub.doric.navbar.BaseDoricNavBar;
 
 public class MainActivity extends AppCompatActivity {
-    private final String BUNDLE_NAME = "Example";
+    private final String BUNDLE_NAME = "List";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

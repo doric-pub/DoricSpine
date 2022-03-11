@@ -17,7 +17,7 @@
     [Doric registerLibrary:[DangleLibrary new]];
     [Doric registerLibrary:[DoricSpineLibrary new]];
     UIWindowScene *windowScene = (UIWindowScene *) scene;
-    NSString *bundleName = @"Example";
+    NSString *bundleName = @"List";
     DoricViewController *doricViewController = [[DoricViewController alloc] initWithSource:[NSString stringWithFormat:@"assets://src/%@.js", bundleName]
                                                                                      alias:bundleName
                                                                                      extra:@""];

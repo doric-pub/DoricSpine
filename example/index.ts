@@ -1,1 +1,1 @@
-export default ["src/Example", "src/Barebones"];
+export default ["src/List"];
