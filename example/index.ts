@@ -1,1 +1,1 @@
-export default ["src/Example"];
+export default ["src/Example", "src/Barebones"];

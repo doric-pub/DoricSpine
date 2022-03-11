@@ -54,6 +54,8 @@ export class SceneRenderer implements Disposable {
 	camera: OrthoCamera;
 	batcher: PolygonBatcher;
 	private twoColorTint = false;
+	window: Window;
+
 	private batcherShader: Shader;
 	private shapes: ShapeRenderer;
 	private shapesShader: Shader;
@@ -61,8 +63,9 @@ export class SceneRenderer implements Disposable {
 	skeletonRenderer: SkeletonRenderer;
 	skeletonDebugRenderer: SkeletonDebugRenderer;
 
-	constructor (canvas: HTMLCanvasElement, context: ManagedWebGLRenderingContext | WebGLRenderingContext, twoColorTint: boolean = true) {
+	constructor (canvas: HTMLCanvasElement, context: ManagedWebGLRenderingContext | WebGLRenderingContext, twoColorTint: boolean = true, window: Window) {
 		this.canvas = canvas;
+		this.window = window;
 		this.context = context instanceof ManagedWebGLRenderingContext ? context : new ManagedWebGLRenderingContext(context);
 		this.twoColorTint = twoColorTint;
 		this.camera = new OrthoCamera(canvas.width, canvas.height);
@@ -466,7 +469,7 @@ export class SceneRenderer implements Disposable {
 
 	resize (resizeMode: ResizeMode) {
 		let canvas = this.canvas;
-		var dpr = window.devicePixelRatio || 1;
+		var dpr = this.window.devicePixelRatio || 1;
 		var w = Math.round(canvas.clientWidth * dpr);
 		var h = Math.round(canvas.clientHeight * dpr);
 

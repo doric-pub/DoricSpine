@@ -19,7 +19,7 @@ import { dangleView, DangleWebGLRenderingContext, vsync } from "dangle";
 import * as spine from "doric-spine";
 
 @Entry
-class demo extends Panel {
+class Example extends Panel {
   private container?: VLayout;
   private currentEffect = "None";
   private skeletonList: Array<string> = [];
@@ -29,7 +29,7 @@ class demo extends Panel {
   private debug = false;
 
   onShow() {
-    navbar(context).setTitle("demo");
+    navbar(context).setTitle("Example");
   }
   build(rootView: Group) {
     const self = this;

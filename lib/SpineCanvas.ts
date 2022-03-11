@@ -1,4 +1,3 @@
-//@ts-nocheck
 /******************************************************************************
  * Spine Runtimes License Agreement
  * Last updated January 1, 2020. Replaces all prior versions.
@@ -28,6 +27,8 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
+import { DangleWebGLRenderingContext, vsync } from "dangle";
+import { BridgeContext } from "doric";
 import { TimeKeeper, AssetManager, ManagedWebGLRenderingContext, SceneRenderer, Input, StringMap } from "./";
 
 /** An app running inside a {@link SpineCanvas}. The app life-cycle
@@ -61,6 +62,7 @@ export interface SpineCanvasConfig {
 /** Manages the life-cycle and WebGL context of a {@link SpineCanvasApp}. The app loads
  * assets and initializes itself, then updates and renders its state at the screen refresh rate. */
 export class SpineCanvas {
+	readonly doricContext: BridgeContext;
 	readonly context: ManagedWebGLRenderingContext;
 
 	/** Tracks the current time, delta, and other time related statistics. */
@@ -77,7 +79,7 @@ export class SpineCanvas {
 	readonly input: Input;
 
 	/** Constructs a new spine canvas, rendering to the provided HTML canvas. */
-	constructor (canvas: HTMLCanvasElement, config: SpineCanvasConfig) {
+	constructor (doricContext: BridgeContext, canvas: HTMLCanvasElement, config: SpineCanvasConfig, window: Window) {
 		if (config.pathPrefix === undefined) config.pathPrefix = "";
 		if (config.app === undefined) config.app = {
 			loadAssets: () => { },
@@ -89,26 +91,36 @@ export class SpineCanvas {
 		if (config.webglConfig === undefined) config.webglConfig = { alpha: true };
 
 		this.htmlCanvas = canvas;
+		this.doricContext = doricContext;
 		this.context = new ManagedWebGLRenderingContext(canvas, config.webglConfig);
-		this.renderer = new SceneRenderer(canvas, this.context);
+		this.renderer = new SceneRenderer(canvas, this.context, undefined, window);
 		this.gl = this.context.gl;
-		this.assetManager = new AssetManager(this.context, config.pathPrefix);
+		this.assetManager = new AssetManager(this.doricContext, this.context, config.pathPrefix);
 		this.input = new Input(canvas);
 
+		const requestAnimationFrame = vsync(doricContext).requestAnimationFrame;
+
+		//@ts-ignore
 		config.app.loadAssets(this);
 
 		let loop = () => {
 			requestAnimationFrame(loop);
 			this.time.update();
+			//@ts-ignore
 			config.app.update(this, this.time.delta);
+			//@ts-ignore
 			config.app.render(this);
+
+			(this.gl as DangleWebGLRenderingContext).endFrame();
 		}
 
 		let waitForAssets = () => {
 			if (this.assetManager.isLoadingComplete()) {
 				if (this.assetManager.hasErrors()) {
+					//@ts-ignore
 					config.app.error(this, this.assetManager.getErrors());
 				} else {
+					//@ts-ignore
 					config.app.initialize(this);
 					loop();
 				}
