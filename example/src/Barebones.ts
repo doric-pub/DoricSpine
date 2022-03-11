@@ -12,7 +12,7 @@ import {
 import { dangleView, DangleWebGLRenderingContext, vsync } from "dangle";
 import * as spine from "doric-spine";
 
-class App {
+class App implements spine.SpineCanvasApp {
   constructor() {
     //@ts-ignore
     this.skeleton = null;
@@ -20,7 +20,7 @@ class App {
     this.animationState = null;
   }
 
-  loadAssets(canvas) {
+  loadAssets(canvas: spine.SpineCanvas) {
     // Load the skeleton file.
     canvas.assetManager.loadBinary("spine/assets/webgl/spineboy-pro.skel");
     // Load the atlas and its pages.
@@ -29,7 +29,7 @@ class App {
     );
   }
 
-  initialize(canvas) {
+  initialize(canvas: spine.SpineCanvas) {
     try {
       let assetManager = canvas.assetManager;
 
@@ -61,7 +61,7 @@ class App {
     }
   }
 
-  update(canvas, delta) {
+  update(canvas: spine.SpineCanvas, delta: number) {
     // Update the animation state using the delta time.
     //@ts-ignore
     this.animationState.update(delta);
@@ -73,7 +73,7 @@ class App {
     this.skeleton.updateWorldTransform();
   }
 
-  render(canvas) {
+  render(canvas: spine.SpineCanvas) {
     let renderer = canvas.renderer;
     // Resize the viewport to the full canvas.
     renderer.resize(spine.ResizeMode.Expand);

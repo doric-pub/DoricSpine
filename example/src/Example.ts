@@ -51,23 +51,24 @@ export class Example extends Panel {
                 }) as any,
               } as HTMLCanvasElement;
 
-              var gl = glContext as WebGLRenderingContext;
-              const requestAnimationFrame =
-                vsync(self.context).requestAnimationFrame;
+              const gl = glContext as WebGLRenderingContext;
+              const requestAnimationFrame = vsync(
+                self.context
+              ).requestAnimationFrame;
               //#region code to impl
 
-              var shader;
-              var batcher;
+              var shader: spine.Shader;
+              var batcher: spine.PolygonBatcher;
               var mvp = new spine.Matrix4();
-              var skeletonRenderer;
-              var assetManager;
+              var skeletonRenderer: spine.SkeletonRenderer;
+              var assetManager: spine.AssetManager;
 
-              var debugRenderer;
-              var debugShader;
-              var shapes;
+              var debugRenderer: spine.SkeletonDebugRenderer;
+              var debugShader: spine.Shader;
+              var shapes: spine.ShapeRenderer;
 
-              var lastFrameTime;
-              var skeletons = {};
+              var lastFrameTime = 0;
+              var skeletons: any = {};
               var format = "JSON";
               var activeSkeleton = "spineboy";
               var pow2 = new spine.Pow(2);
@@ -210,10 +211,10 @@ export class Example extends Panel {
               }
 
               function loadSkeleton(
-                name,
-                initialAnimation,
-                premultipliedAlpha,
-                skin
+                name: string,
+                initialAnimation: string,
+                premultipliedAlpha: boolean,
+                skin: string
               ) {
                 if (skin === undefined) skin = "default";
 
@@ -238,6 +239,7 @@ export class Example extends Panel {
                   assetManager.require(name)
                 );
                 var skeleton = new spine.Skeleton(skeletonData);
+                loge(skin);
                 skeleton.setSkinByName(skin);
                 var bounds = calculateSetupPoseBounds(skeleton);
 
@@ -266,7 +268,7 @@ export class Example extends Panel {
                   entry.mixDuration = 1;
                 } else animationState.setAnimation(0, initialAnimation, true);
 
-                function log(message) {
+                function log(message: string) {
                   loge(message);
                 }
                 animationState.addListener({
@@ -309,7 +311,7 @@ export class Example extends Panel {
                 };
               }
 
-              function calculateSetupPoseBounds(skeleton) {
+              function calculateSetupPoseBounds(skeleton: spine.Skeleton) {
                 skeleton.setToSetupPose();
                 skeleton.updateWorldTransform();
                 var offset = new spine.Vector2();
@@ -589,7 +591,7 @@ export class Example extends Panel {
                 batcher.begin(shader);
 
                 if (self.currentEffect == "None") {
-                  skeletonRenderer.vertexEffect = null;
+                  (skeletonRenderer.vertexEffect as any) = null;
                 } else if (self.currentEffect == "Swirl") {
                   swirlTime += delta;
                   var percent = swirlTime % 2;
